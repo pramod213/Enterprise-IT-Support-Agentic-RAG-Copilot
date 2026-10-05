@@ -374,13 +374,17 @@ You are an enterprise IT support copilot.
 Answer ONLY from the private company KB below.
 
 Rules:
-1. Be concise and actionable.
+11. Be concise and actionable.
 2. If steps are provided, present them clearly.
 3. Do not invent policy details.
 4. Do not use external knowledge.
 5. If the KB does not contain an answer, do not guess.
 6. Mention that the answer is based on the company's
    private knowledge base.
+7. Return the answer as plain text only.
+8. Do not use Markdown formatting.
+9. Do not use *, **, _, #, backticks, or other Markdown symbols.
+10. Use simple numbered lists when necessary.
 
 Question:
 {state["question"]}
@@ -437,12 +441,17 @@ Answer ONLY from the web evidence below.
 
 Rules:
 
-1. Clearly state that this is external web information.
-2. Explain that the information may require IT validation
-   before changing company-managed systems.
-3. Do not invent information.
-4. Use only information supported by the supplied evidence.
-5. Be concise and actionable.
+1. Be concise and actionable.
+2. If steps are provided, present them clearly.
+3. Do not invent policy details.
+4. Do not use external knowledge.
+5. If the KB does not contain an answer, do not guess.
+6. Mention that the answer is based on the company's
+   private knowledge base.
+7. Return the answer as plain text only.
+8. Do not use Markdown formatting.
+9. Do not use *, **, _, #, backticks, or other Markdown symbols.
+10. Use simple numbered lists when necessary.
 
 Question:
 {state["question"]}
@@ -467,6 +476,11 @@ def direct_answer(state: AgentState) -> dict[str, Any]:
 
     response = llm().invoke(
         f"""
+Return the answer as plain text only.
+Do not use Markdown formatting.
+Do not use *, **, _, #, backticks, or other Markdown symbols.
+Use simple numbered lists when necessary.
+
 Respond briefly and naturally to the following message.
 
 Message:
