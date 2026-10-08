@@ -2,11 +2,137 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-primary: #0a0d12;
+  --bg-secondary: #0f141c;
+  --bg-card: #121923;
+  --bg-input: #111823;
+  --bg-composer: #111823;
+  --bg-modal: #111823;
+  --bg-overlay: rgba(0, 0, 0, 0.72);
+  --bg-main-gradient-start: #141b26;
+  --bg-main-gradient-end: #0a0d12;
+
+  --text-primary: #edf2f7;
+  --text-secondary: #8c98a8;
+  --text-muted: #657184;
+  --text-inverse: #07100c;
+
+  --border-color: #202936;
+  --border-secondary: #273142;
+  --border-tertiary: #293444;
+  --border-input: #2d394b;
+  --border-trace: #273244;
+  --border-source: #2a3648;
+  --border-citation: #293444;
+
+  --accent-primary: #44c486;
+  --accent-secondary: #65d69a;
+  --accent-tertiary: #78e5af;
+  --accent-bg: #183b2e;
+  --accent-text: #78e5af;
+  --avatar-bg: #1b6b4b;
+  --answer-source: #7ee6b1;
+  --citation-link: #8bc4ff;
+
+  --button-secondary-bg: #151c26;
+  --button-secondary-border: #303b4b;
+  --button-secondary-text: #dbe4ee;
+  --button-secondary-hover-border: #3a4658;
+
+  --bubble-assistant-bg: #141b24;
+  --bubble-assistant-border: #243041;
+  --bubble-user-bg: #1a3d31;
+  --bubble-user-border: #245d49;
+
+  --trace-bg: #151c26;
+  --trace-border: #273244;
+  --empty-text: #657184;
+
+  --pill-bg: #151e29;
+  --pill-border: #293446;
+  --pill-text: #aab6c5;
+
+  --status-dot: #65d69a;
+
+  --flow-step-border: #3a4658;
+  --flow-step-text: #bac4d1;
+
+  --modal-input-border: #2d394b;
+  --upload-status: #91a0b1;
+
+  --send-btn-bg: #44c486;
+  --send-btn-text: #07100c;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-composer: #ffffff;
+  --bg-modal: #ffffff;
+  --bg-overlay: rgba(15, 23, 42, 0.5);
+  --bg-main-gradient-start: #f1f5f9;
+  --bg-main-gradient-end: #f8fafc;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  --border-color: #e2e8f0;
+  --border-secondary: #e2e8f0;
+  --border-tertiary: #e2e8f0;
+  --border-input: #cbd5e1;
+  --border-trace: #e2e8f0;
+  --border-source: #e2e8f0;
+  --border-citation: #e2e8f0;
+
+  --accent-primary: #22c55e;
+  --accent-secondary: #4ade80;
+  --accent-tertiary: #86efac;
+  --accent-bg: #dcfce7;
+  --accent-text: #166534;
+  --avatar-bg: #16a34a;
+  --answer-source: #16a34a;
+  --citation-link: #2563eb;
+
+  --button-secondary-bg: #f1f5f9;
+  --button-secondary-border: #e2e8f0;
+  --button-secondary-text: #334155;
+  --button-secondary-hover-border: #cbd5e1;
+
+  --bubble-assistant-bg: #ffffff;
+  --bubble-assistant-border: #e2e8f0;
+  --bubble-user-bg: #dcfce7;
+  --bubble-user-border: #bbf7d0;
+
+  --trace-bg: #f8fafc;
+  --trace-border: #e2e8f0;
+  --empty-text: #94a3b8;
+
+  --pill-bg: #f1f5f9;
+  --pill-border: #e2e8f0;
+  --pill-text: #475569;
+
+  --status-dot: #22c55e;
+
+  --flow-step-border: #cbd5e1;
+  --flow-step-text: #475569;
+
+  --modal-input-border: #cbd5e1;
+  --upload-status: #64748b;
+
+  --send-btn-bg: #22c55e;
+  --send-btn-text: #ffffff;
+}
+
 body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #0a0d12;
-  color: #edf2f7;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .shell {
@@ -18,8 +144,8 @@ body {
 
 .sidebar,
 .trace-panel {
-  background: #0f141c;
-  border-color: #202936;
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
   border-style: solid;
 }
 
@@ -42,8 +168,8 @@ body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .16em;
-  background: #183b2e;
-  color: #78e5af;
+  background: var(--accent-bg);
+  color: var(--accent-text);
   padding: 7px 9px;
   border-radius: 7px;
 }
@@ -55,13 +181,13 @@ body {
 }
 
 .muted {
-  color: #8c98a8;
+  color: var(--text-secondary);
   line-height: 1.55;
 }
 
 .workflow-card {
-  border: 1px solid #273142;
-  background: #121923;
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-card);
   padding: 16px;
   border-radius: 14px;
 }
@@ -74,16 +200,16 @@ body {
 .flow-step {
   font-size: 13px;
   padding: 8px 10px;
-  border-left: 2px solid #3a4658;
-  color: #bac4d1;
+  border-left: 2px solid var(--flow-step-border);
+  color: var(--flow-step-text);
   margin: 5px 0;
 }
 
 .secondary-btn,
 .example {
-  border: 1px solid #303b4b;
-  background: #151c26;
-  color: #dbe4ee;
+  border: 1px solid var(--button-secondary-border);
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
   border-radius: 10px;
   padding: 11px 13px;
   cursor: pointer;
@@ -95,12 +221,12 @@ body {
   min-width: 0;
   height: 100%;
   overflow: hidden;
-  background: radial-gradient(circle at top, #141b26 0, #0a0d12 44%);
+  background: radial-gradient(circle at top, var(--bg-main-gradient-start) 0, var(--bg-main-gradient-end) 44%);
 }
 
 .topbar {
   height: 70px;
-  border-bottom: 1px solid #202936;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -111,18 +237,18 @@ body {
 .status-dot {
   width: 8px;
   height: 8px;
-  background: #65d69a;
+  background: var(--status-dot);
   border-radius: 50%;
   display: inline-block;
   margin-right: 8px;
 }
 
 .pill {
-  background: #151e29;
-  border: 1px solid #293446;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
   padding: 8px 11px;
   border-radius: 999px;
-  color: #aab6c5;
+  color: var(--pill-text);
 }
 
 .chat-area {
@@ -145,7 +271,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: #1b6b4b;
+  background: var(--avatar-bg);
   display: grid;
   place-items: center;
   font-size: 11px;
@@ -159,16 +285,16 @@ body {
 
 .bubble {
   max-width: 760px;
-  background: #141b24;
-  border: 1px solid #243041;
+  background: var(--bubble-assistant-bg);
+  border: 1px solid var(--bubble-assistant-border);
   border-radius: 16px;
   padding: 15px 17px;
   line-height: 1.55;
 }
 
 .user .bubble {
-  background: #1a3d31;
-  border-color: #245d49;
+  background: var(--bubble-user-bg);
+  border-color: var(--bubble-user-border);
 }
 
 .bubble p {
@@ -181,19 +307,19 @@ body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .08em;
-  color: #7ee6b1;
+  color: var(--answer-source);
 }
 
 .citations {
   margin-top: 12px;
   padding-top: 10px;
-  border-top: 1px solid #293444;
+  border-top: 1px solid var(--border-citation);
   font-size: 12px;
-  color: #a9b5c4;
+  color: var(--text-secondary);
 }
 
 .citations a {
-  color: #8bc4ff;
+  color: var(--citation-link);
   text-decoration: none;
 }
 
@@ -217,8 +343,8 @@ body {
   display: flex;
   gap: 10px;
   padding: 10px;
-  background: #111823;
-  border: 1px solid #293444;
+  background: var(--bg-composer);
+  border: 1px solid var(--border-tertiary);
   border-radius: 16px;
 }
 
@@ -228,7 +354,7 @@ body {
   background: transparent;
   border: none;
   outline: none;
-  color: #eef3f8;
+  color: var(--text-primary);
   font: inherit;
   padding: 10px;
   resize: none;
@@ -236,8 +362,8 @@ body {
 
 .send-btn {
   border: none;
-  background: #44c486;
-  color: #07100c;
+  background: var(--send-btn-bg);
+  color: var(--send-btn-text);
   font-weight: 800;
   border-radius: 11px;
   padding: 0 18px;
@@ -262,20 +388,20 @@ body {
 
 .trace-item {
   font-size: 12px;
-  background: #151c26;
-  border: 1px solid #273244;
+  background: var(--trace-bg);
+  border: 1px solid var(--trace-border);
   padding: 11px;
   border-radius: 10px;
 }
 
 .empty {
-  color: #657184;
+  color: var(--empty-text);
   font-size: 13px;
 }
 
 .source-box {
   margin-top: 20px;
-  border: 1px solid #2a3648;
+  border: 1px solid var(--border-source);
   border-radius: 12px;
   padding: 14px;
   display: flex;
@@ -285,7 +411,7 @@ body {
 
 .source-box span {
   font-size: 11px;
-  color: #7f8a99;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: .08em;
 }
@@ -297,7 +423,7 @@ body {
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, .72);
+  background: var(--bg-overlay);
   display: grid;
   place-items: center;
   padding: 20px;
@@ -309,8 +435,8 @@ body {
 
 .modal-card {
   width: min(520px, 100%);
-  background: #111823;
-  border: 1px solid #2a3647;
+  background: var(--bg-modal);
+  border: 1px solid var(--border-source);
   border-radius: 18px;
   padding: 22px;
 }
@@ -328,13 +454,13 @@ body {
 .modal-head button {
   background: none;
   border: none;
-  color: white;
+  color: var(--text-primary);
   font-size: 28px;
   cursor: pointer;
 }
 
 .modal-card input {
-  border: 1px solid #2d394b;
+  border: 1px solid var(--modal-input-border);
   border-radius: 10px;
   margin: 7px 0;
 }
@@ -348,7 +474,7 @@ body {
 .upload-status {
   font-size: 13px;
   margin-top: 10px;
-  color: #91a0b1;
+  color: var(--upload-status);
 }
 
 @media (max-width: 1050px) {

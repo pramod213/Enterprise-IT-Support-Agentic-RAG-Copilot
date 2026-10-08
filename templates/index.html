@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ app_name }}</title>
   <link rel="stylesheet" href="/static/css/style.css" />
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="shell">
@@ -34,7 +42,12 @@
           <span class="status-dot"></span>
           <span>Enterprise Knowledge Copilot</span>
         </div>
-        <span class="pill">Agentic RAG</span>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="pill">Agentic RAG</span>
+          <button id="themeToggle" class="secondary-btn" aria-label="Toggle theme" title="Toggle theme" style="padding:6px 10px;min-width:40px;height:36px;display:grid;place-items:center;">
+            <span id="themeIcon">☀</span>
+          </button>
+        </div>
       </header>
 
       <section id="chat" class="chat-area">

@@ -3,6 +3,31 @@ const form = document.getElementById('chatForm');
 const question = document.getElementById('question');
 const trace = document.getElementById('trace');
 const sourceUsed = document.getElementById('sourceUsed');
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+function updateThemeIcon() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (themeIcon) {
+    themeIcon.textContent = isLight ? '🌙' : '☀';
+  }
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', function() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.removeItem('theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+    updateThemeIcon();
+  });
+}
+
+updateThemeIcon();
 
 function escapeHtml(s=''){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function formatText(s=''){return escapeHtml(s).replace(/\n/g,'<br>');}
