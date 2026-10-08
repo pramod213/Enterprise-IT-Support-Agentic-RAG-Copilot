@@ -640,3 +640,61 @@ def ask(question: str) -> Any:
     }
 
     return agent_graph.invoke(initial)
+
+
+async def ask_stream(question: str):
+    """Run the enterprise IT support workflow with streaming."""
+    
+    initial = {
+        "question": question,
+        "current_query": question,
+        "kb_docs": [],
+        "web_results": "",
+        "kb_grade": "",
+        "web_grade": "",
+        "answer": "",
+        "source_used": "",
+        "retry_count": 0,
+        "trace": [],
+        "citations": [],
+    }
+    
+    # Generation node names that produce the final answer
+    generation_nodes = {"direct_answer", "generate_from_kb", "generate_from_web"}
+    
+    # Track if we've started streaming the answer
+    answer_started = False
+    
+    async for event in agent_graph.astream_events(initial, version="v2"):
+        event_type = event["event"]
+        name = event.get("name", "")
+        data = event.get("data", {})
+        metadata = event.get("metadata", {})
+        
+        # Stream tokens from generation nodes
+        if event_type == "on_chat_model_stream" and "chunk" in data:
+            chunk = data["chunk"]
+            langgraph_node = metadata.get("langgraph_node", "")
+            
+            if langgraph_node in generation_nodes and hasattr(chunk, "content") and chunk.content:
+                if not answer_started:
+                    yield {"type": "start"}
+                    answer_started = True
+                
+                yield {"type": "token", "content": chunk.content}
+        
+        # When the graph completes, send metadata
+        elif event_type == "on_chain_end" and name == "LangGraph":
+            output = data.get("output", {})
+            
+            # Send metadata after streaming completes
+            yield {
+                "type": "metadata",
+                "source_used": output.get("source_used", ""),
+                "citations": output.get("citations", []),
+                "trace": output.get("trace", []),
+                "rewritten_query": output.get("current_query", question),
+            }
+            
+            yield {"type": "done"}
+            break

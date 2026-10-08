@@ -1,10 +1,12 @@
 from pathlib import Path
+import json
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Header
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from app.core.config import get_settings
-from app.rag.workflow import ask
+from app.rag.workflow import ask, ask_stream
 from app.rag.vectorstore import add_documents
 from app.services.ingestion import load_file, chunk_documents, SUPPORTED
 from app.services.audit import write_audit
@@ -44,6 +46,30 @@ def chat(payload: ChatRequest):
 
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc),) from exc
+
+
+@router.post("/chat/stream")
+async def chat_stream(payload: ChatRequest):
+    """Stream the chat response progressively."""
+    
+    async def event_generator():
+        try:
+            # Stream events from the workflow
+            async for event in ask_stream(payload.question):
+                yield f"data: {json.dumps(event)}\n\n"
+        except Exception as exc:
+            error_event = {"type": "error", "message": str(exc)}
+            yield f"data: {json.dumps(error_event)}\n\n"
+    
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @router.post("/ingest")
